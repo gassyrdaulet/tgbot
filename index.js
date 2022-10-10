@@ -143,25 +143,6 @@ const start = async () => {
         });
       return;
     }
-    if (text === "ВЫЙТИ 🚪" && !msg.reply_to_message) {
-      await bot.sendMessage(
-        chatId,
-        "Вы действительно хотите выйти из аккаунта?",
-        {
-          reply_markup: JSON.stringify({
-            inline_keyboard: [
-              [
-                { text: "Нет", callback_data: "Назад 🔙" },
-                { text: " ", callback_data: "empty" },
-                { text: "Да", callback_data: "logout" },
-              ],
-              [{ text: "Главное меню 🔙", callback_data: "Назад 🔙" }],
-            ],
-          }),
-        }
-      );
-      return;
-    }
     if (msg?.web_app_data?.data) {
       try {
         const data = JSON.parse(msg?.web_app_data?.data);
@@ -229,6 +210,25 @@ const start = async () => {
       }
       bot.answerCallbackQuery(msg.id, { text: "Ошибка! Вы не авторизованы." });
       bot.setMyCommands(unauthorizedMenu);
+      return;
+    }
+    if (data === "ВЫЙТИ 🚪") {
+      await bot.sendMessage(
+        chatId,
+        "Вы действительно хотите выйти из аккаунта?",
+        {
+          reply_markup: JSON.stringify({
+            inline_keyboard: [
+              [
+                { text: "Нет", callback_data: "Назад 🔙" },
+                { text: " ", callback_data: "empty" },
+                { text: "Да", callback_data: "logout" },
+              ],
+              [{ text: "Главное меню 🔙", callback_data: "Назад 🔙" }],
+            ],
+          }),
+        }
+      );
       return;
     }
     if (data === "logout") {
