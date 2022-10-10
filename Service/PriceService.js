@@ -34,9 +34,29 @@ export const editPriceXHR = async (req, res) => {
         message_text: "Ваши данные успешно обработаны.",
       },
     });
-    res.send(200).json({ message: "Okay!" });
+    res.status(200).json({ message: "Okay!" });
   } catch (e) {
-    res.send(500).json({ message: "An error occured: " + e });
+    res.status(500).json({ message: "An error occured: " + e });
+  }
+};
+
+export const newPriceXHR = async (req, res) => {
+  try {
+    const { queryId, data, fromWho } = req.body;
+    const tablename = await getTableName(fromWho);
+    const final = prepareObjectForDB(data);
+    await conn.query(`INSERT INTO  ${tablename} SET ? `, final);
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Succesfully loaded!",
+      input_message_content: {
+        message_text: "Ваши данные успешно обработаны.",
+      },
+    });
+    res.status(200).json({ message: "Okay!" });
+  } catch (e) {
+    res.status(500).json({ message: "An error occured: " + e });
   }
 };
 
@@ -56,9 +76,9 @@ export const activatePriceXHR = async (req, res) => {
         message_text: "Ваши данные успешно обработаны.",
       },
     });
-    res.send(200).json({ message: "Okay!" });
+    res.status(200).json({ message: "Okay!" });
   } catch (e) {
-    res.send(500).json({ message: "An error occured: " + e });
+    res.status(500).json({ message: "An error occured: " + e });
   }
 };
 
@@ -78,9 +98,9 @@ export const deactivatePriceXHR = async (req, res) => {
         message_text: "Ваши данные успешно обработаны.",
       },
     });
-    res.send(200).json({ message: "Okay!" });
+    res.status(200).json({ message: "Okay!" });
   } catch (e) {
-    res.send(500).json({ message: "An error occured: " + e });
+    res.status(500).json({ message: "An error occured: " + e });
   }
 };
 
@@ -100,9 +120,9 @@ export const deletePriceXHR = async (req, res) => {
         message_text: "Ваши данные успешно обработаны.",
       },
     });
-    res.send(200).json({ message: "Okay!" });
+    res.status(200).json({ message: "Okay!" });
   } catch (e) {
-    res.send(500).json({ message: "An error occured: " + e });
+    res.status(500).json({ message: "An error occured: " + e });
   }
 };
 
@@ -167,7 +187,7 @@ export const getPriceInfoById = async (req, res) => {
     const price = (
       await conn.query(`SELECT * FROM ${tablename} WHERE id = ${id}`)
     )[0];
-    res.send(price);
+    res.status(price);
   } catch (e) {
     res.status(500).json({ message: "A server error occured: " + e });
   }
@@ -178,7 +198,7 @@ export const getAllPrices = async (req, res) => {
     const fromId = req.body.fromId;
     const tablename = await getTableName(fromId);
     const prices = (await conn.query(`SELECT * FROM ${tablename}`))[0];
-    res.send(prices);
+    res.status(prices);
   } catch (e) {
     res.status(500).json({ message: "A server error occured: " + e });
   }
@@ -198,7 +218,7 @@ export const getBrands = async (req, res) => {
     filteredBrands.map((brand) =>
       respond.push({ value: brand.brand, label: brand.brand })
     );
-    res.send(respond);
+    res.status(respond);
   } catch (e) {
     res.status(500).json({ message: "A server error occured: " + e });
   }
@@ -220,7 +240,7 @@ export const getCategories = async (req, res) => {
     filteredCategories.map((category) =>
       respond.push({ value: category.category, label: category.category })
     );
-    res.send(respond);
+    res.status(respond);
   } catch (e) {
     res.status(500).json({ message: "A server error occured: " + e });
   }
