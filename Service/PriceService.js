@@ -255,7 +255,6 @@ export const getStoreId = async (req, res) => {
         `SELECT store_id FROM users WHERE telegram_id = ${fromId}`
       )
     )[0][0];
-    console.log(response);
     res.send(response);
   } catch (e) {
     console.log("Failed fetch..." + e);
