@@ -250,9 +250,8 @@ export const getCategories = async (req, res) => {
 export const getStoreId = async (req, res) => {
   try {
     const { fromId } = req.query;
-    const tablename = await getTableName(fromId);
     const response = await conn.query(
-      `SELECT store_id FROM  ${tablename} WHERE telegram_id = ${fromId}`
+      `SELECT store_id FROM users WHERE telegram_id = ${fromId}`
     );
     console.log(response);
     res.send(response);
