@@ -187,7 +187,7 @@ export const getPriceInfoById = async (req, res) => {
     const price = (
       await conn.query(`SELECT * FROM ${tablename} WHERE id = ${id}`)
     )[0];
-    res.status(price);
+    res.send(price);
   } catch (e) {
     res.status(500).json({ message: "A server error occured: " + e });
   }
@@ -198,7 +198,8 @@ export const getAllPrices = async (req, res) => {
     const fromId = req.body.fromId;
     const tablename = await getTableName(fromId);
     const prices = (await conn.query(`SELECT * FROM ${tablename}`))[0];
-    res.status(prices);
+    console;
+    res.send(prices);
   } catch (e) {
     res.status(500).json({ message: "A server error occured: " + e });
   }
@@ -218,7 +219,7 @@ export const getBrands = async (req, res) => {
     filteredBrands.map((brand) =>
       respond.push({ value: brand.brand, label: brand.brand })
     );
-    res.status(respond);
+    res.send(respond);
   } catch (e) {
     res.status(500).json({ message: "A server error occured: " + e });
   }
@@ -242,6 +243,6 @@ export const getCategories = async (req, res) => {
     );
     res.status(respond);
   } catch (e) {
-    res.status(500).json({ message: "A server error occured: " + e });
+    res.send(500).json({ message: "A server error occured: " + e });
   }
 };
