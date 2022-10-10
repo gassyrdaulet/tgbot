@@ -15,7 +15,7 @@ const router = new Router();
 
 router.post("/", getAllPrices);
 router.get("/price/:id", getPriceInfoById);
-router.get("/new", newPriceXHR);
+router.post("/new", newPriceXHR);
 router.get("/brands", getBrands);
 router.get("/categories", getCategories);
 router.post("/edit", editPriceXHR);
