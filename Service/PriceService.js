@@ -250,9 +250,11 @@ export const getCategories = async (req, res) => {
 export const getStoreId = async (req, res) => {
   try {
     const { fromId } = req.query;
-    const response = await conn.query(
-      `SELECT store_id FROM users WHERE telegram_id = ${fromId}`
-    );
+    const response = (
+      await conn.query(
+        `SELECT store_id FROM users WHERE telegram_id = ${fromId}`
+      )
+    )[0][0];
     console.log(response);
     res.send(response);
   } catch (e) {
