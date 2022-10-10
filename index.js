@@ -229,6 +229,9 @@ const start = async () => {
           }),
         }
       );
+      bot.answerCallbackQuery(msg.id, {
+        text: "Вы пытаетесь выйти из аккаунта.",
+      });
       return;
     }
     if (data === "logout") {
