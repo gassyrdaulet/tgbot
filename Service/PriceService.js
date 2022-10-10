@@ -251,7 +251,7 @@ export const getStoreId = async (req, res) => {
   try {
     const { fromId } = req.query;
     const tablename = await getTableName(fromId);
-    const response = await conn(
+    const response = await conn.query(
       `SELECT store_id FROM  ${tablename} WHERE telegram_id = ${fromId}`
     );
     console.log(response);
