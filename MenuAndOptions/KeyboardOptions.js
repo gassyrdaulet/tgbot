@@ -18,7 +18,7 @@ export const forceReplyForCreateNewPrice = {
 export const mainWebAppOptions = {
   disable_notification: true,
   reply_markup: JSON.stringify({
-    keyboard: [
+    inline_keyboard: [
       [
         {
           text: "Все прайсы 📋",
