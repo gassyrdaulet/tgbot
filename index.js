@@ -52,11 +52,11 @@ const credentials = {
 const moreinfo = 'Подробнее <a href="https://kaspi.kz">+7 (776) 829 08 79</a>';
 const replytimeout = 20; //В секундах
 
-const bot = new TelegramApi(token, { polling: true });
+export const bot = new TelegramApi(token, { polling: true });
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use("/", priceRouter);
+app.use("/api/", priceRouter);
 app.listen(Port, () => {
   console.log("server started on port " + Port);
 });
@@ -190,7 +190,6 @@ const start = async () => {
     const queryId = msg.id;
     const text = msg.message.text;
     const data = msg.data;
-    console.log(data);
     if (data === "login") {
       try {
         await bot.deleteMessage(chatId, msg.message.message_id);
@@ -263,11 +262,6 @@ const start = async () => {
       await bot.answerCallbackQuery(msg.id, {
         text: "empty",
       });
-      return;
-    }
-
-    if (data === "web app") {
-      await bot.answerCallbackQuery(queryId, { text: "hello" });
       return;
     }
   });

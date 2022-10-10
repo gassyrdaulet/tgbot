@@ -1,5 +1,6 @@
 import { getTableName } from "./AuthService.js";
 import { conn } from "../index.js";
+import { bot } from "../index.js";
 
 export const createNewPrice = async (data, fromWho) => {
   const tablename = await getTableName(fromWho);
@@ -14,6 +15,95 @@ export const editPrice = async (data, fromWho) => {
     `UPDATE ${tablename} SET ? , date = CURRENT_TIMESTAMP WHERE id = ${data.id}`,
     final
   );
+};
+
+export const editPriceXHR = async (req, res) => {
+  try {
+    const { queryId, data, fromWho } = req.body;
+    const tablename = await getTableName(fromWho);
+    const final = prepareObjectForDB(data);
+    await conn.query(
+      `UPDATE ${tablename} SET ? , date = CURRENT_TIMESTAMP WHERE id = ${data.id}`,
+      final
+    );
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Succesfully loaded!",
+      input_message_content: {
+        message_text: "Ваши данные успешно обработаны.",
+      },
+    });
+    res.send(200).json({ message: "Okay!" });
+  } catch (e) {
+    res.send(500).json({ message: "An error occured: " + e });
+  }
+};
+
+export const activatePriceXHR = async (req, res) => {
+  try {
+    const { queryId, data, fromWho } = req.body;
+    const tablename = await getTableName(fromWho);
+    let sql = `UPDATE ${tablename} SET activated = "yes" WHERE`;
+    const ids = generateIdsSQL(data.id);
+    sql += ids;
+    await conn.query(sql);
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Succesfully loaded!",
+      input_message_content: {
+        message_text: "Ваши данные успешно обработаны.",
+      },
+    });
+    res.send(200).json({ message: "Okay!" });
+  } catch (e) {
+    res.send(500).json({ message: "An error occured: " + e });
+  }
+};
+
+export const deactivatePriceXHR = async (req, res) => {
+  try {
+    const { queryId, data, fromWho } = req.body;
+    const tablename = await getTableName(fromWho);
+    let sql = `UPDATE ${tablename} SET activated = "no" WHERE`;
+    const ids = generateIdsSQL(data.id);
+    sql += ids;
+    await conn.query(sql);
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Succesfully loaded!",
+      input_message_content: {
+        message_text: "Ваши данные успешно обработаны.",
+      },
+    });
+    res.send(200).json({ message: "Okay!" });
+  } catch (e) {
+    res.send(500).json({ message: "An error occured: " + e });
+  }
+};
+
+export const deletePriceXHR = async (req, res) => {
+  try {
+    const { queryId, data, fromWho } = req.body;
+    const tablename = await getTableName(fromWho);
+    let sql = `DELETE FROM ${tablename} WHERE`;
+    const ids = generateIdsSQL(data.id);
+    sql += ids;
+    await conn.query(sql);
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Succesfully loaded!",
+      input_message_content: {
+        message_text: "Ваши данные успешно обработаны.",
+      },
+    });
+    res.send(200).json({ message: "Okay!" });
+  } catch (e) {
+    res.send(500).json({ message: "An error occured: " + e });
+  }
 };
 
 export const activatePrice = async (data, fromWho) => {
