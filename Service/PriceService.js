@@ -257,6 +257,6 @@ export const getStoreId = async (req, res) => {
     console.log(response);
     res.send(response);
   } catch (e) {
-    res.send(500).json({ message: "A server error occured: " + e });
+    res.status(500).json({ message: "A server error occured: " + e });
   }
 };
