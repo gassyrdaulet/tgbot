@@ -23,6 +23,6 @@ router.post("/edit", editPriceXHR);
 router.post("/delete", deletePriceXHR);
 router.post("/deactivate", deactivatePriceXHR);
 router.post("/activate", activatePriceXHR);
-router.post("/store", getStoreId);
+router.get("/store", getStoreId);
 
 export default router;
