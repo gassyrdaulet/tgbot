@@ -257,7 +257,7 @@ export const getStoreId = async (req, res) => {
     console.log(response);
     res.send(response);
   } catch (e) {
-    console.log("Failed fetch...");
+    console.log("Failed fetch..." + e);
     res.status(500).json({ message: "A server error occured: " + e });
   }
 };
