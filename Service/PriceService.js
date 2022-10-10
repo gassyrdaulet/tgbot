@@ -19,8 +19,8 @@ export const editPrice = async (data, fromWho) => {
 
 export const editPriceXHR = async (req, res) => {
   try {
-    const { queryId, data, fromWho } = req.body;
-    const tablename = await getTableName(fromWho);
+    const { queryId, data, fromId } = req.body;
+    const tablename = await getTableName(fromId);
     const final = prepareObjectForDB(data);
     await conn.query(
       `UPDATE ${tablename} SET ? , date = CURRENT_TIMESTAMP WHERE id = ${data.id}`,
@@ -42,8 +42,8 @@ export const editPriceXHR = async (req, res) => {
 
 export const newPriceXHR = async (req, res) => {
   try {
-    const { queryId, data, fromWho } = req.body;
-    const tablename = await getTableName(fromWho);
+    const { queryId, data, fromId } = req.body;
+    const tablename = await getTableName(fromId);
     const final = prepareObjectForDB(data);
     await conn.query(`INSERT INTO  ${tablename} SET ? `, final);
     await bot.answerWebAppQuery(queryId, {
@@ -62,8 +62,8 @@ export const newPriceXHR = async (req, res) => {
 
 export const activatePriceXHR = async (req, res) => {
   try {
-    const { queryId, data, fromWho } = req.body;
-    const tablename = await getTableName(fromWho);
+    const { queryId, data, fromId } = req.body;
+    const tablename = await getTableName(fromId);
     let sql = `UPDATE ${tablename} SET activated = "yes" WHERE`;
     const ids = generateIdsSQL(data.id);
     sql += ids;
@@ -84,8 +84,8 @@ export const activatePriceXHR = async (req, res) => {
 
 export const deactivatePriceXHR = async (req, res) => {
   try {
-    const { queryId, data, fromWho } = req.body;
-    const tablename = await getTableName(fromWho);
+    const { queryId, data, fromId } = req.body;
+    const tablename = await getTableName(fromId);
     let sql = `UPDATE ${tablename} SET activated = "no" WHERE`;
     const ids = generateIdsSQL(data.id);
     sql += ids;
@@ -106,8 +106,8 @@ export const deactivatePriceXHR = async (req, res) => {
 
 export const deletePriceXHR = async (req, res) => {
   try {
-    const { queryId, data, fromWho } = req.body;
-    const tablename = await getTableName(fromWho);
+    const { queryId, data, fromId } = req.body;
+    const tablename = await getTableName(fromId);
     let sql = `DELETE FROM ${tablename} WHERE`;
     const ids = generateIdsSQL(data.id);
     sql += ids;
