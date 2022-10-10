@@ -254,6 +254,7 @@ export const getStoreId = async (req, res) => {
     const response = await conn(
       `SELECT store_id FROM  ${tablename} WHERE telegram_id = ${fromId}`
     );
+    console.log(response);
     res.send(response);
   } catch (e) {
     res.send(500).json({ message: "A server error occured: " + e });
