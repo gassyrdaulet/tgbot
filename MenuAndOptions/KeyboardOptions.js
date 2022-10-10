@@ -29,7 +29,7 @@ export const mainWebAppOptions = {
       [{ text: "Помощь ℹ️", callback_data: "empty" }],
       [{ text: "Скачать XML price 💾", callback_data: "empty" }],
       [{ text: "Настройки ⚙️", callback_data: "empty" }],
-      [{ text: "ВЫЙТИ 🚪", callback_data: "1" }],
+      [{ text: "ВЫЙТИ 🚪", callback_data: "confirm logout" }],
     ],
     resize_keyboard: true,
   }),

@@ -212,7 +212,7 @@ const start = async () => {
       bot.setMyCommands(unauthorizedMenu);
       return;
     }
-    if (data === "ВЫЙТИ 🚪") {
+    if (data === "confirm logout") {
       await bot.sendMessage(
         chatId,
         "Вы действительно хотите выйти из аккаунта?",
