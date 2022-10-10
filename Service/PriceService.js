@@ -241,7 +241,20 @@ export const getCategories = async (req, res) => {
     filteredCategories.map((category) =>
       respond.push({ value: category.category, label: category.category })
     );
-    res.status(respond);
+    res.send(respond);
+  } catch (e) {
+    res.send(500).json({ message: "A server error occured: " + e });
+  }
+};
+
+export const getStoreId = async (req, res) => {
+  try {
+    const { fromId } = req.query.id;
+    const tablename = await getTableName(fromId);
+    const response = await conn(
+      `SELECT store_id FROM  ${tablename} WHERE telegram_id = ${fromId}`
+    );
+    res.send(response);
   } catch (e) {
     res.send(500).json({ message: "A server error occured: " + e });
   }
