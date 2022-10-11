@@ -261,3 +261,7 @@ export const getStoreId = async (req, res) => {
     res.status(500).json({ message: "A server error occured: " + e });
   }
 };
+
+export const getXML = async (req, res) => {
+  console.log(req);
+};

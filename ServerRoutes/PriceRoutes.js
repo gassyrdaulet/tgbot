@@ -10,6 +10,7 @@ import {
   activatePriceXHR,
   newPriceXHR,
   getStoreId,
+  getXML,
 } from "../Service/PriceService.js";
 
 const router = new Router();
@@ -24,5 +25,6 @@ router.post("/delete", deletePriceXHR);
 router.post("/deactivate", deactivatePriceXHR);
 router.post("/activate", activatePriceXHR);
 router.get("/store", getStoreId);
+router.get("/xml", getXML);
 
 export default router;
