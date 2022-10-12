@@ -263,6 +263,6 @@ export const getStoreId = async (req, res) => {
 };
 
 export const getXML = async (req, res) => {
-  console.log(req);
+  console.log(req.req);
   res.status(200).json({ message: "Okay" });
 };
