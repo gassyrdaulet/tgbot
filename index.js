@@ -40,7 +40,7 @@ export const conn = mysql.createPool({
 const config = JSON.parse(
   await readFile(new URL("./config/Token.json", import.meta.url))
 );
-const { token, Port, SecurePort } = config;
+const { token, Port, SecurePort, webAppURL } = config;
 const privateKey = fs.readFileSync("./keys/privkey.pem", "utf8");
 const certificate = fs.readFileSync("./keys/cert.pem", "utf8");
 const ca = fs.readFileSync("./keys/chain.pem", "utf8");
@@ -92,7 +92,12 @@ const start = async () => {
         reply_markup: JSON.stringify({
           inline_keyboard: [
             [{ text: "Войти", callback_data: "login" }],
-            [{ text: "Зарегистрироваться", callback_data: "empty" }],
+            [
+              {
+                text: "Зарегистрироваться",
+                web_app: { url: webAppURL + "/register" },
+              },
+            ],
           ],
         }),
       });
