@@ -1,13 +1,9 @@
-import { conn } from "../index.js";
 import bcrypt from "bcryptjs";
+import { conn, bot } from "../index.js";
 
 const oneDay = 1000 * 60 * 60 * 24;
 const authLifeTime = 1 * oneDay;
 
-export const registration = async (password = "lolapopa") => {
-  const hashedpassword = await bcrypt.hash(password, 5);
-  console.log(hashedpassword);
-};
 export const checkForAuth = async (id) => {
   try {
     const date = (
@@ -74,3 +70,34 @@ export const getTableName = async (id) => {
     return "0";
   }
 };
+export const registration = async (req, res) => {
+  try {
+    const { queryId, data, fromId } = req.body;
+    console.log(data);
+    const date = new Date(Date.now());
+    await conn.query(
+      `INSERT INTO users SET lastlogindate = "${date}" , tablename = "${data.store_id}" , ?`,
+      data
+    );
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Succesfully loaded!",
+      input_message_content: {
+        message_text: "Вы успешно зарегистрированы!",
+      },
+    });
+    res.status(200).json({ message: "Okay!" });
+  } catch (e) {
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Fail.",
+      input_message_content: {
+        message_text: "Произошла ошибка!",
+      },
+    });
+    res.status(500).json({ message: "Произошла ошибка: " + e });
+  }
+};
+9;

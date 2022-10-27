@@ -1,6 +1,5 @@
 import { getTableName } from "./AuthService.js";
-import { conn } from "../index.js";
-import { bot } from "../index.js";
+import { conn, bot } from "../index.js";
 
 export const createNewPrice = async (data, fromWho) => {
   const tablename = await getTableName(fromWho);

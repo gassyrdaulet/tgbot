@@ -7,6 +7,7 @@ import https from "https";
 import { readFile } from "fs/promises";
 import CryptoJS from "crypto-js";
 import priceRouter from "./ServerRoutes/PriceRoutes.js";
+import authRouter from "./ServerRoutes/AuthRoutes.js";
 import Stickers from "./Stickers/Stickers.js";
 import {
   checkForAuth,
@@ -57,6 +58,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/api", priceRouter);
+app.use("/api/auth", priceRouter);
 app.listen(Port, () => {
   console.log("server started on port " + Port);
 });
