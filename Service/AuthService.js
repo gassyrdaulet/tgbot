@@ -84,25 +84,25 @@ export const registration = async (req, res) => {
       `INSERT INTO users SET tablename = "${data.store_id}" , ?`,
       { ...data, lastlogindate: date }
     );
-    await bot.answerWebAppQuery(queryId, {
-      type: "article",
-      id: queryId,
-      title: "Succesfully loaded!",
-      input_message_content: {
-        message_text: "Вы успешно зарегистрированы!",
-      },
-    });
+    // await bot.answerWebAppQuery(queryId, {
+    //   type: "article",
+    //   id: queryId,
+    //   title: "Succesfully loaded!",
+    //   input_message_content: {
+    //     message_text: "Вы успешно зарегистрированы!",
+    //   },
+    // });
     res.status(200).json({ message: "Okay!" });
   } catch (e) {
     console.error(e);
-    await bot.answerWebAppQuery(queryId, {
-      type: "article",
-      id: queryId,
-      title: "Fail.",
-      input_message_content: {
-        message_text: "Произошла ошибка!",
-      },
-    });
+    // await bot.answerWebAppQuery(queryId, {
+    //   type: "article",
+    //   id: queryId,
+    //   title: "Fail.",
+    //   input_message_content: {
+    //     message_text: "Произошла ошибка!",
+    //   },
+    // });
     res.status(500).json({ message: "Произошла ошибка: " + e });
   }
 };
