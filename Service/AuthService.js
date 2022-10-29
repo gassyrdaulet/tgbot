@@ -76,8 +76,8 @@ export const registration = async (req, res) => {
     console.log(data);
     const date = new Date(Date.now());
     await conn.query(
-      `INSERT INTO users SET lastlogindate = "${date}" , tablename = "${data.store_id}" , ?`,
-      data
+      `INSERT INTO users SET tablename = "${data.store_id}" , ?`,
+      { ...data, lastlogindate: date }
     );
     await bot.answerWebAppQuery(queryId, {
       type: "article",
