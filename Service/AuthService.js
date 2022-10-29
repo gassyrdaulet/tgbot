@@ -77,7 +77,7 @@ export const registration = async (req, res) => {
       "SELECT EXISTS(SELECT id FROM users WHERE telegram_id = ?)",
       data.telegram_id
     );
-    console.log(isAlreadyExist);
+    console.log(isAlreadyExist[0]);
     console.log(data);
     const date = new Date(Date.now());
     await conn.query(
