@@ -75,36 +75,48 @@ export const registration = async (req, res) => {
     const { queryId, data, fromId } = req.body;
     const isAlreadyExist = (
       await conn.query(
-        "SELECT EXISTS(SELECT id FROM users WHERE telegram_id = 1551)",
+        "SELECT EXISTS(SELECT id FROM users WHERE telegram_id = ?)",
         data.telegram_id
       )
     )[0][0];
-    console.log(Object.values(isAlreadyExist));
+    if (parseInt(Object.values(isAlreadyExist)[0]) !== 0) {
+      res.status(400).json({ message: "User already exists!!" });
+      await bot.answerWebAppQuery(queryId, {
+        type: "article",
+        id: queryId,
+        title: "failed!",
+        input_message_content: {
+          message_text: "Пользователь уже существует!",
+        },
+      });
+      return;
+    }
+    data.password = await bcrypt.hash(password, 5);
     console.log(data);
     const date = new Date(Date.now());
     await conn.query(
       `INSERT INTO users SET tablename = "${data.store_id}" , ?`,
       { ...data, lastlogindate: date }
     );
-    // await bot.answerWebAppQuery(queryId, {
-    //   type: "article",
-    //   id: queryId,
-    //   title: "Succesfully loaded!",
-    //   input_message_content: {
-    //     message_text: "Вы успешно зарегистрированы!",
-    //   },
-    // });
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Succesfully loaded!",
+      input_message_content: {
+        message_text: "Вы успешно зарегистрированы!",
+      },
+    });
     res.status(200).json({ message: "Okay!" });
   } catch (e) {
     console.error(e);
-    // await bot.answerWebAppQuery(queryId, {
-    //   type: "article",
-    //   id: queryId,
-    //   title: "Fail.",
-    //   input_message_content: {
-    //     message_text: "Произошла ошибка!",
-    //   },
-    // });
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Fail.",
+      input_message_content: {
+        message_text: "Произошла ошибка!",
+      },
+    });
     res.status(500).json({ message: "Произошла ошибка: " + e });
   }
 };
