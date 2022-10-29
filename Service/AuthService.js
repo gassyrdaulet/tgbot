@@ -89,6 +89,7 @@ export const registration = async (req, res) => {
     });
     res.status(200).json({ message: "Okay!" });
   } catch (e) {
+    console.error(e);
     await bot.answerWebAppQuery(queryId, {
       type: "article",
       id: queryId,
