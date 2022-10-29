@@ -32,10 +32,10 @@ import {
 } from "./Service/PriceService.js";
 export const conn = mysql.createPool({
   host: "127.0.0.1",
-  user: "root",
+  user: "gas",
+  password: "Zeveta1559!",
   database: "kaspi_price_list",
   port: "3306",
-  password: "",
 });
 
 const config = JSON.parse(
