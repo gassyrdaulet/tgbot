@@ -91,7 +91,7 @@ export const registration = async (req, res) => {
       });
       return;
     }
-    data.password = await bcrypt.hash(password, 5);
+    data.password = await bcrypt.hash(data.password, 5);
     console.log(data);
     const date = new Date(Date.now());
     await conn.query(
