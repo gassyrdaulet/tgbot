@@ -73,9 +73,11 @@ export const getTableName = async (id) => {
 export const registration = async (req, res) => {
   try {
     const { queryId, data, fromId } = req.body;
-    const isAlreadyExist = await conn.query(
-      "SELECT EXISTS(SELECT id FROM users WHERE telegram_id = 1551)",
-      data.telegram_id
+    const isAlreadyExist = (
+      await conn.query(
+        "SELECT EXISTS(SELECT id FROM users WHERE telegram_id = 1551)",
+        data.telegram_id
+      )
     )[0][0];
     console.log(Object.values(isAlreadyExist));
     console.log(data);
