@@ -58,7 +58,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/api", priceRouter);
-app.use("/api/auth", priceRouter);
+app.use("/api/auth", authRouter);
 app.listen(Port, () => {
   console.log("server started on port " + Port);
 });
