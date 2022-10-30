@@ -71,8 +71,8 @@ export const getTableName = async (id) => {
   }
 };
 export const registration = async (req, res) => {
+  const { queryId, data, fromId } = req.body;
   try {
-    const { queryId, data, fromId } = req.body;
     const isAlreadyExist = (
       await conn.query(
         "SELECT EXISTS(SELECT id FROM users WHERE telegram_id = ?)",
@@ -92,7 +92,6 @@ export const registration = async (req, res) => {
       return;
     }
     data.password = await bcrypt.hash(data.password, 5);
-    console.log(data);
     const date = new Date(Date.now());
     await conn.query(
       `INSERT INTO users SET tablename = "${data.store_id}" , ?`,
@@ -106,6 +105,7 @@ export const registration = async (req, res) => {
         message_text: "Вы успешно зарегистрированы!",
       },
     });
+    await conn.query(`CREATE ${data.store_id} LIKE pricelist`);
     res.status(200).json({ message: "Okay!" });
   } catch (e) {
     console.error(e);
