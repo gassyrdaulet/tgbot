@@ -35,6 +35,7 @@ export const editPriceXHR = async (req, res) => {
     });
     res.status(200).json({ message: "Okay!" });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: "An error occured: " + e });
   }
 };
@@ -55,6 +56,7 @@ export const newPriceXHR = async (req, res) => {
     });
     res.status(200).json({ message: "Okay!" });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: "An error occured: " + e });
   }
 };
