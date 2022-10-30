@@ -94,7 +94,7 @@ export const registration = async (req, res) => {
     data.password = await bcrypt.hash(data.password, 5);
     const date = new Date(Date.now());
     await conn.query(
-      `INSERT INTO users SET tablename = "${data.store_id}" , ?`,
+      `INSERT INTO users SET tablename = "pricelist${data.store_id}" , ?`,
       { ...data, lastlogindate: date }
     );
     await bot.answerWebAppQuery(queryId, {
