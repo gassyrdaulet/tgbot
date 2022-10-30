@@ -57,6 +57,7 @@ export const bot = new TelegramApi(token, { polling: true });
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
 app.use("/api", priceRouter);
 app.use("/api/auth", authRouter);
 app.listen(Port, () => {
