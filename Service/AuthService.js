@@ -105,7 +105,7 @@ export const registration = async (req, res) => {
         message_text: "Вы успешно зарегистрированы!",
       },
     });
-    await conn.query(`CREATE "${data.store_id}" LIKE pricelist`);
+    await conn.query(`CREATE TABLE "${data.store_id}" LIKE pricelist`);
     res.status(200).json({ message: "Okay!" });
   } catch (e) {
     console.error(e);
