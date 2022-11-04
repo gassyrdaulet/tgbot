@@ -272,9 +272,8 @@ export const getXML = async (req, res) => {
 export const uploadXML = async (req, res) => {
   try {
     const { filename, content } = req.body;
-    await fs.writeFile("./public" + filename + ".xml", content);
+    await fs.writeFile("./public/" + filename + ".xml", content);
     console.log("Successfully uploaded new file : " + filename);
-    console.log(content);
     res.status(200).json({ message: "success" });
   } catch (e) {
     console.log("Failed ..." + e);
