@@ -1,5 +1,6 @@
 import { getTableName } from "./AuthService.js";
 import { conn, bot } from "../index.js";
+import fs from "fs/promises";
 
 export const createNewPrice = async (data, fromWho) => {
   const tablename = await getTableName(fromWho);
@@ -266,4 +267,15 @@ export const getStoreId = async (req, res) => {
 export const getXML = async (req, res) => {
   console.log(req.req);
   res.status(200).json({ message: "Okay" });
+};
+
+export const uploadXML = async (req, res) => {
+  try {
+    const { filename, content } = req.body;
+    await fs.writeFile("./public" + filename + ".xml", content);
+    res.status(200).json({ message: "success" });
+  } catch (e) {
+    console.log("Failed ..." + e);
+    res.status(500).json({ message: "A server error occured: " + e });
+  }
 };
