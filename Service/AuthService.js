@@ -125,7 +125,9 @@ export const getUser = async (req, res) => {
   try {
     const { fromId: id } = req.body;
     const data = (
-      await conn.query(`SELECT * FROM users WHERE telegram_id = ${id}`)
+      await conn.query(
+        `SELECT * FROM users WHERE telegram_id = ${id === 0 ? "767355250" : id}`
+      )
     )[0][0];
     res.send(data);
   } catch (e) {

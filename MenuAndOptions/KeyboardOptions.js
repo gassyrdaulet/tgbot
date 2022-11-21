@@ -28,7 +28,7 @@ export const mainWebAppOptions = {
       [{ text: "Добавить прайс ➕", web_app: { url: webAppURL + "/new" } }],
       [{ text: "Помощь ℹ️", callback_data: "empty" }],
       [{ text: "Скачать XML price 💾", callback_data: "empty" }],
-      [{ text: "Настройки ⚙️", callback_data: "empty" }],
+      [{ text: "Настройки ⚙️", callback_data: webAppURL + "/settings" }],
       [{ text: "ВЫЙТИ 🚪", callback_data: "confirm logout" }],
     ],
     resize_keyboard: true,
