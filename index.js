@@ -9,12 +9,7 @@ import CryptoJS from "crypto-js";
 import priceRouter from "./ServerRoutes/PriceRoutes.js";
 import authRouter from "./ServerRoutes/AuthRoutes.js";
 import Stickers from "./Stickers/Stickers.js";
-import {
-  checkForAuth,
-  login,
-  logout,
-  registration,
-} from "./Service/AuthService.js";
+import { checkForAuth, login, logout } from "./Service/AuthService.js";
 import {
   mainWebAppOptions,
   unauthorizedMenu,

@@ -97,6 +97,7 @@ export const registration = async (req, res) => {
       `INSERT INTO users SET tablename = "pricelist${data.store_id}" , ?`,
       { ...data, lastlogindate: date }
     );
+    await conn.query(`CREATE TABLE pricelist${data.store_id} LIKE pricelist`);
     await bot.answerWebAppQuery(queryId, {
       type: "article",
       id: queryId,
@@ -105,7 +106,6 @@ export const registration = async (req, res) => {
         message_text: "Вы успешно зарегистрированы!",
       },
     });
-    await conn.query(`CREATE TABLE pricelist${data.store_id} LIKE pricelist`);
     res.status(200).json({ message: "Okay!" });
   } catch (e) {
     console.error(e);
@@ -120,4 +120,26 @@ export const registration = async (req, res) => {
     res.status(500).json({ message: "Произошла ошибка: " + e });
   }
 };
-9;
+
+export const getUser = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const data = (
+      await conn.query(`SELECT * FROM users WHERE telegram_id = ${id}`)
+    )[0][0];
+    res.send(data);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "Error! " + e });
+  }
+};
+
+export const setting = async (req, res) => {
+  const { queryId, data, fromId } = req.body;
+  if (data.password === "") {
+    delete data.password;
+  } else {
+    data.password = await bcrypt.hash(data.password, 5);
+  }
+  await conn.query(`UPDATE users SET ?  WHERE telegram_id = ${fromId}`, data);
+};
