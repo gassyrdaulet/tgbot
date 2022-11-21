@@ -123,7 +123,7 @@ export const registration = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { fromId: id } = req.body;
     const data = (
       await conn.query(`SELECT * FROM users WHERE telegram_id = ${id}`)
     )[0][0];
