@@ -145,7 +145,6 @@ export const setting = async (req, res) => {
       data.password = await bcrypt.hash(data.password, 5);
     }
     await conn.query(`UPDATE users SET ?  WHERE telegram_id = ${fromId}`, data);
-    res.status(200).json({ message: "Success!" });
     await bot.answerWebAppQuery(queryId, {
       type: "article",
       id: queryId,
@@ -154,9 +153,9 @@ export const setting = async (req, res) => {
         message_text: "Настройки успешно сохранены.",
       },
     });
+    res.status(200).json({ message: "Success!" });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: "Error! " + e });
     await bot.answerWebAppQuery(queryId, {
       type: "article",
       id: queryId,
@@ -165,5 +164,6 @@ export const setting = async (req, res) => {
         message_text: "Возникла непредвиденная ошибка! " + e,
       },
     });
+    res.status(500).json({ message: "Error! " + e });
   }
 };
