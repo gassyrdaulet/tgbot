@@ -124,6 +124,8 @@ export const registration = async (req, res) => {
 export const getUser = async (req, res) => {
   try {
     const { fromId: id } = req.body;
+    console.log(id);
+
     const data = (
       await conn.query(
         `SELECT * FROM users WHERE telegram_id = ${id === 0 ? "767355250" : id}`
