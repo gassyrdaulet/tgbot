@@ -137,11 +137,33 @@ export const getUser = async (req, res) => {
 };
 
 export const setting = async (req, res) => {
-  const { queryId, data, fromId } = req.body;
-  if (data.password === "") {
-    delete data.password;
-  } else {
-    data.password = await bcrypt.hash(data.password, 5);
+  try {
+    const { queryId, data, fromId } = req.body;
+    if (data.password === "") {
+      delete data.password;
+    } else {
+      data.password = await bcrypt.hash(data.password, 5);
+    }
+    await conn.query(`UPDATE users SET ?  WHERE telegram_id = ${fromId}`, data);
+    res.status(200).json({ message: "Success!" });
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "Success!",
+      input_message_content: {
+        message_text: "Настройки успешно сохранены.",
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "Error! " + e });
+    await bot.answerWebAppQuery(queryId, {
+      type: "article",
+      id: queryId,
+      title: "failed!",
+      input_message_content: {
+        message_text: "Возникла непредвиденная ошибка! " + e,
+      },
+    });
   }
-  await conn.query(`UPDATE users SET ?  WHERE telegram_id = ${fromId}`, data);
 };
